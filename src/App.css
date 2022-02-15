@@ -48,3 +48,34 @@
 body {
   margin: 0 auto
 }
+.codeIde{
+  display:flex;
+}
+.codeToCompile{
+  width:70vw;
+  height:70vh;
+  background-color: lightgrey;
+}
+.codeToArrange{
+  width:30vw;
+  align-self: flex-start;
+  background-color: bisque;
+}
+.codeSnippet[id="0"]{
+  background-color: aliceblue;
+  overflow: auto;
+}
+.codeSnippet[id="1"]{
+  background-color:antiquewhite;
+  overflow: auto;
+
+}
+.codeSnippet[id="2"]{
+  background-color:lightblue;
+  overflow: auto;
+
+}
+.codeSnippet[id="3"]{
+  background-color:lightgreen;
+  overflow: auto;
+}
