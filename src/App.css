@@ -59,7 +59,9 @@ body {
 .codeToArrange{
   width:30vw;
   align-self: flex-start;
-  background-color: bisque;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
 }
 .codeSnippet[id="0"]{
   background-color: aliceblue;
