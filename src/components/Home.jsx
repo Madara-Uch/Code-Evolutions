@@ -7,6 +7,7 @@ import CodeItem from "./CodeItem";
 import CodeBox from "./CodeBox";
 function Home() {
     const [codeArray, setCodeArray] = useState([]);
+    const [colorArray, setColorArray] = useState([0,1,2,3]);
     const movePetListItem = useCallback(
         (dragIndex, hoverIndex) => {
             const dragItem = codeArray[dragIndex]
@@ -14,23 +15,42 @@ function Home() {
             // Swap places of dragItem and hoverItem in the pets array
             setCodeArray(codeArray => {
                 const updatedPets = [...codeArray]
-                console.log(codeArray);
+                // console.log(codeArray);
                 updatedPets[dragIndex] = hoverItem
                 updatedPets[hoverIndex] = dragItem
-                console.log(updatedPets);
-                console.log(dragItem,dragIndex,hoverIndex);
+                // console.log(updatedPets);
                 return updatedPets
             })
+            setColorArray((colorArray)=>{
+                const updatedColors = [...colorArray]
+                const dragColor=colorArray[dragIndex];
+                const hoverColor = colorArray[hoverIndex];
+                // console.log(dragIndex,"startcolor->",dragColor);
+                // console.log(hoverIndex,"endcolor->",hoverColor);
+                // console.log(colorArray);
+                updatedColors[dragIndex] = hoverColor
+                updatedColors[hoverIndex] = dragColor
+                // console.log(updatedColors);
+                return updatedColors
+            })
         },
-        [codeArray],
+        [codeArray,colorArray],
     )
     useEffect(() => {
-        setCodeArray([[`const puppeteer`], [`puppeteer.launch({`,
-            `headless:false,`], [`.then(function (b){`,
+        setCodeArray([[`const puppeteer = require("puppeteer"); `,
+            `let browser;`,
+            `let page;`,
+            `let data;`,
+            `let language;`], [`puppeteer.launch({`,
+            `headless:false,`,
+            `defaultViewport: null,`,
+            `args: ["--start-maximized"],`,
+            `})`], [`.then(function (b){`,
             `browser=b;`,
-            `return browser.pages();`], [`.then(function (pages){`,
+            `return browser.pages();`,
+            `})`], [`.then(function (pages){`,
             `page=pages[0];`,
-            `return page.goto`,
+            `return page.goto("https://www.hackerrank.com/dashboard");`,
             `})`]])
     }, [])
     return (<div className="home" style={{ display: "flex" }}>
@@ -43,7 +63,7 @@ function Home() {
                 <div className="codeToArrange">
                     {codeArray.map((code, index) => {
                         return (
-                            <CodeItem key={index} moveListItem={movePetListItem} index={index} code={code}/>   
+                            <CodeItem key={code} moveListItem={movePetListItem} color={colorArray[index]} index={index} code={code}/>   
                         )
                     })}
                 </div>
