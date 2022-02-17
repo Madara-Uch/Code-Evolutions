@@ -1,17 +1,17 @@
 import React, { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
-function CodeItem({code,color,index,moveListItem}) {
+function CodeBoxItem({code,color,index,moveListItem}) {
     console.log(code,color,index,moveListItem);
     const [{ isDragging }, dragRef] = useDrag({
-        type: 'item',
+        type: 'Boxitem',
         item: { index },
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),
     })
     const [spec, dropRef] = useDrop({
-        accept: 'item',
+        accept: 'Boxitem',
         hover: (item, monitor) => {
             const dragIndex = item.index
             const hoverIndex = index
@@ -45,4 +45,4 @@ function CodeItem({code,color,index,moveListItem}) {
   )
 }
 
-export default CodeItem
+export default CodeBoxItem
