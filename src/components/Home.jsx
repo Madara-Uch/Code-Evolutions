@@ -8,7 +8,8 @@ import CodeBox from "./CodeBox";
 function Home() {
     const [assistArray, setAssistArray] = useState([]);
     const [mainArray,setMainArray] = useState([]);
-    const [colorArray, setColorArray] = useState([0,1,2,3]);
+    const [mainColorArray, setMainColorArray] = useState([0,1,2,3]);
+    const [assistColorArray, setAssistColorArray] = useState([0,1,2,3]);
     const moveListItem = useCallback(
         (dragIndex, hoverIndex) => {
             const dragItem = assistArray[dragIndex]
@@ -22,10 +23,10 @@ function Home() {
                 // console.log(updatedPets);
                 return updatedPets
             })
-            setColorArray((colorArray)=>{
-                const updatedColors = [...colorArray]
-                const dragColor=colorArray[dragIndex];
-                const hoverColor = colorArray[hoverIndex];
+            setAssistColorArray((assistColorArray)=>{
+                const updatedColors = [...assistColorArray]
+                const dragColor=assistColorArray[dragIndex];
+                const hoverColor = assistColorArray[hoverIndex];
                 // console.log(dragIndex,"startcolor->",dragColor);
                 // console.log(hoverIndex,"endcolor->",hoverColor);
                 // console.log(colorArray);
@@ -35,7 +36,7 @@ function Home() {
                 return updatedColors
             })
         },
-        [assistArray,colorArray],
+        [assistArray,assistColorArray],
     )
     const moveBoxListItem = useCallback(
         (dragIndex, hoverIndex) => {
@@ -50,10 +51,10 @@ function Home() {
                 // console.log(updatedPets);
                 return updatedPets
             })
-            setColorArray((colorArray)=>{
-                const updatedColors = [...colorArray]
-                const dragColor=colorArray[dragIndex];
-                const hoverColor = colorArray[hoverIndex];
+            setMainColorArray((mainColorArray)=>{
+                const updatedColors = [...mainColorArray]
+                const dragColor=mainColorArray[dragIndex];
+                const hoverColor = mainColorArray[hoverIndex];
                 // console.log(dragIndex,"startcolor->",dragColor);
                 // console.log(hoverIndex,"endcolor->",hoverColor);
                 // console.log(colorArray);
@@ -63,13 +64,13 @@ function Home() {
                 return updatedColors
             })
         },
-        [mainArray,colorArray],
+        [mainArray,mainColorArray],
     )
     const setMainArrayFunc=(value)=>{
         setMainArray(value);
     }
-    const setColorArrayFunc=(value)=>{
-        setColorArray(value);
+    const setMainColorArrayFunc=(value)=>{
+        setMainColorArray(value);
     }
     const insert = (arr, index, newItem) => [
         // part of the array before the specified index
@@ -82,19 +83,32 @@ function Home() {
     const changeList=useCallback((insertingIntoMainArray,dragIndex,hoverIndex)=>{
         if(insertingIntoMainArray===true){
             let tempArr=[...assistArray];
+            let tempColorArr=[...assistColorArray];
             let item=[];
+            let color=[];
             if(tempArr.length>1){
                 item=tempArr.splice(dragIndex,1);
+                color=tempColorArr.splice(dragIndex,1);
                 setAssistArray(tempArr);
+                setAssistColorArray(tempColorArr);
             }
             else if(tempArr.length==1){
                 item=tempArr;
+                color=tempColorArr;
                 setAssistArray([]);
+                setAssistColorArray([]);
             }
-            console.log(item);
+            // console.log(item);
             setMainArray((mainArray)=>{
                 let updatedArray=[...mainArray];
                 const result=insert(updatedArray,hoverIndex,item[0]);
+                // updatedArray.splice(hoverIndex, 0, item);
+                console.log("main array",result)
+                return result;
+            })
+            setMainColorArray((mainColorArray)=>{
+                let updatedArray=[...mainColorArray];
+                const result=insert(updatedArray,hoverIndex,color[0]);
                 // updatedArray.splice(hoverIndex, 0, item);
                 console.log("main array",result)
                 return result;
@@ -105,14 +119,14 @@ function Home() {
             let item=tempArr.splice(dragIndex,1);
             setAssistArray(tempArr);
             // let item=mainArray.splice(dragIndex,1)[0];
-            setAssistArray((assistArray)=>{
+            setMainArray((assistArray)=>{
                 let updatedArray=[...assistArray];
                 const result=insert(updatedArray,hoverIndex,item[0]);
                 console.log("assist array",updatedArray)
                 return result;
             })
         }
-    },[mainArray,assistArray,colorArray])
+    },[mainArray,assistArray,mainColorArray,assistColorArray])
     useEffect(() => {
         setAssistArray([[`const puppeteer = require("puppeteer"); `,
             `let browser;`,
@@ -136,12 +150,12 @@ function Home() {
         <NavBar>
             <div className="codeIde">
                 <div className="codeToCompile">
-                    <CodeBox movePetListItem={moveBoxListItem} changeList={changeList} codeArray={mainArray} setMainArray={setMainArrayFunc} setColorArray={setColorArrayFunc} colorArray={colorArray}></CodeBox>
+                    <CodeBox movePetListItem={moveBoxListItem} changeList={changeList} codeArray={mainArray} setMainArray={setMainArrayFunc} setColorArray={setMainColorArrayFunc} colorArray={mainColorArray}></CodeBox>
                 </div>
                 <div className="codeToArrange">
                     {assistArray.map((code, index) => {
                         return (
-                            <CodeItem key={code} moveListItem={moveListItem} color={colorArray[index]} index={index} code={code}/>   
+                            <CodeItem key={code} moveListItem={moveListItem} color={assistColorArray[index]} index={index} code={code}/>   
                         )
                     })}
                 </div>

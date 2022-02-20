@@ -20,11 +20,11 @@ function CodeBox({codeArray,colorArray,setMainArray,setColorArray,movePetListIte
     drop: (item, monitor) => {
       if(monitor.isOver({ shallow: true }) && codeArray.length==0){
         console.log(item.index);
-        changeList(true,item.index,0);
+        changeList(true,item.index,codeArray.length-1);
       }
       else{
         console.log(item.index);
-        changeList(true,item.index,0);
+        changeList(true,item.index,codeArray.length);
       }
         // item.color=hoverIndex;
         // color=dragIndex;
