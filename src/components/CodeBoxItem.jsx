@@ -37,7 +37,7 @@ function CodeBoxItem({code,color,index,moveListItem}) {
     const dragDropRef = dragRef(dropRef(ref));
     const opacity = isDragging ? 0 : 1
   return (
-    <div className="codeSnippet" ref={dragDropRef} style={{ opacity }} id={color}>{code.map((line, index) => {
+    <div className="codeSnippet" ref={dragDropRef} style={{ opacity ,textAlign:"left"}} id={color}>{code.map((line, index) => {
         return (<div className="lineOfCode" id={index}  key={index} >
             {line}
         </div>)
